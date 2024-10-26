@@ -1,4 +1,4 @@
-const quotes = [
+let quotes = [
   {
     quote:
       "Programs must be written for people to read, and only incidentally for machines to execute.",
@@ -22,6 +22,9 @@ function showRandomQuote() {
   let len = quotes.length;
   let i = Math.floor(Math.random() * len);
   console.log(i);
+  if (localStorage.length > 0) {
+    quotes = JSON.parse(localStorage.getItem("quotes"));
+  }
   let quote = quotes[i].quote;
   let element = document.createElement("p");
   element.textContent = quote;
@@ -33,16 +36,21 @@ function clearQuotes() {
   showingArea.innerHTML = "";
 }
 
-function addQuote() {
-  const newQuote = document.getElementById("newQuoteText").value;
-  const newQuoteCategory = document.getElementById("newQuoteCategory").value;
+function createAddQuoteForm() {
+  const newQuote = document.getElementById("newQuoteText");
+  const newQuoteCategory = document.getElementById("newQuoteCategory");
+  let newQuoteText = newQuote.value;
+  let categoryText = newQuoteCategory.value;
 
-  if (newQuote && newQuoteCategory) {
+  if (newQuoteText && categoryText) {
     quotes.push({
-      quote: newQuote,
-      category: newQuoteCategory,
+      quote: newQuoteText,
+      category: categoryText,
     });
-    showingArea.innerHTML = `<p>${newQuote}~${newQuoteCategory}</p>`;
+    showingArea.innerHTML = `<p>Quote:${newQuoteText}<br> Category:${categoryText}</p>`;
+    newQuote.value = "";
+    newQuoteCategory.value = "";
+    localStorage.setItem("quotes", JSON.stringify(quotes));
   } else {
     alert("Ensure to fill both the inputs");
   }
