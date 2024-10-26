@@ -19,5 +19,12 @@
       />
       <button onclick="createAddQuoteForm()">Add Quote</button>
     </div>
+    <button onclick="createDownloadLink()" id="download">Download</button>
+    <input
+      type="file"
+      accept=".json"
+      id="importFile"
+      onchange="importFromJsonFile(event)"
+    />
   </body>
 </html>
