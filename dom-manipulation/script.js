@@ -7,14 +7,19 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       quote: "Inspiring.",
-      category: "inspiring",
+      category: "spiritual",
     },
     {
       quote: "spiritual",
       category: "spiritual",
     },
+    {
+      quote: "amazing",
+      category: "spiritual",
+    },
   ];
 
+  Window.quotes = quotes;
   const button = document.getElementById("newQuote");
   const showingArea = document.getElementById("quoteDisplay");
   const downloadButton = document.getElementById("download");
@@ -86,6 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function saveQuotes() {
     localStorage.setItem("quotes", JSON.stringify(quotes));
   }
+  const browse = document.getElementById("importFile");
+  browse.addEventListener("change", importFromJsonFile);
   function importFromJsonFile(event) {
     const fileReader = new FileReader();
     fileReader.onload = function (event) {
@@ -97,9 +104,35 @@ document.addEventListener("DOMContentLoaded", function () {
     fileReader.readAsText(event.target.files[0]);
   }
 
-  function filterQuotes() {
+  function filterQuotes(event) {
+    let currentCategory = event.target.value;
+
     let array = JSON.parse(localStorage.getItem("quotes"));
+
+    function filterArray(arra, key, value) {
+      return arra.filter((ele) => ele[key] === value);
+    }
+    let filtered = filterArray(array, "category", `${currentCategory}`);
+    filtered.forEach((ele) => {
+      let string = document.createElement("p");
+      string.textContent = ele.quote;
+      document.body.appendChild(string);
+    });
   }
+  function populateCategories() {
+    quotes = JSON.parse(localStorage.getItem("quotes"));
+
+    let allCategory = [];
+    quotes.forEach((element) => {
+      allCategory.push(element.category);
+    });
+    let allCategoryset = new Set(allCategory);
+    Array.from(allCategoryset).forEach((ele) => {
+      const option = new Option(`${ele}`, `${ele}`);
+      choice.add(option);
+    });
+  }
+  populateCategories();
 
   insertButton.addEventListener("click", createAddQuoteForm);
   downloadButton.addEventListener("click", createDownloadLink);
