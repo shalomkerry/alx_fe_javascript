@@ -55,3 +55,5 @@ function createAddQuoteForm() {
     alert("Ensure to fill both the inputs");
   }
 }
+
+button.addEventListener("click", showRandomQuote);
