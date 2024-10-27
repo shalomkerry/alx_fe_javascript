@@ -138,6 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ? quotes
         : quotes.filter((quote) => quote.category === selectedCategory);
     const quoteDisplay = document.getElementById("quoteDisplay");
+    let i = Math.floor(Math.random() * quotes.length);
     quoteDisplay.innerHTML = "";
     filteredQuotes.forEach((quote) => {
       const quoteElement = document.createElement("div");
