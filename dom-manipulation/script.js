@@ -215,13 +215,13 @@ document.addEventListener("DOMContentLoaded", function () {
         quotes = serverQuotes;
         populateCategoryFilter();
         filterQuotes();
+        console.log("Quotes synced with server!");
       }
     } catch (error) {
       console.error("Error syncing quotes:", error);
     }
   }
 
-  // Periodically sync quotes with the server
   setInterval(syncQuotes, 60000);
   insertButton.addEventListener("click", createAddQuoteForm);
   downloadButton.addEventListener("click", createDownloadLink);
